@@ -25,9 +25,9 @@ impl Thesaurus {
     }
 
     pub fn get_shortest_synonym(&self, word: &str) -> Option<String> {
-        let mut shortest_synonym: Option<String> = None;
+        let mut shortest_synonym: Option<String> = Some(word.to_string());
         for thesaurus_word in &self.words {
-            if thesaurus_word.word == word {
+            if thesaurus_word.word.to_ascii_lowercase() == word.to_ascii_lowercase() {
                 for synonym in &thesaurus_word.synonyms {
                     if let Some(shortest_synonym_tmp) = &shortest_synonym {
                         if synonym.len() < shortest_synonym_tmp.len() {
@@ -43,9 +43,9 @@ impl Thesaurus {
     }
 
     pub fn get_longest_synonym(&self, word: &str) -> Option<String> {
-        let mut longest_synonym: Option<String> = None;
+        let mut longest_synonym: Option<String> = Some(word.to_string());
         for thesaurus_word in &self.words {
-            if thesaurus_word.word == word {
+            if thesaurus_word.word.to_ascii_lowercase() == word.to_ascii_lowercase() {
                 for synonym in &thesaurus_word.synonyms {
                     if let Some(longest_synonym_tmp) = &longest_synonym {
                         if synonym.len() > longest_synonym_tmp.len() {
@@ -86,5 +86,5 @@ pub fn decompress(input: impl AsRef<str>) -> String {
         }
         output.push(' ');
     }
-    output
+    output.trim().to_string()
 }

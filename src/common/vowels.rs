@@ -20,23 +20,35 @@ pub fn compress(input: impl AsRef<str>, intense: bool) -> String {
     for word in input.as_ref().split_whitespace() {
         // does this word have a vowel?
         let mut has_vowel = false;
-        let mut vowel_indices = Vec::new();
-        for (i, c) in word.chars().enumerate() {
+        for c in word.chars() {
             if is_vowel(c) {
                 has_vowel = true;
-                vowel_indices.push(i);
+                break;
             }
         }
 
         // for each vowel that isn't the first or last letter...
         if has_vowel {
             let mut word = word.to_string();
-            for i in vowel_indices {
-                if (i != 0 && i != word.len() - 1) || intense {
-                    word = format!("{}{}", &word[..i], &word[i + 1..]);
+            // if we're in intense mode, modify the whole word;
+            // otherwise, just modify everything but the first and last letters
+            let mut start = 1;
+            let mut end = word.len() - 1;
+            if intense {
+                start = 0;
+                end = word.len();
+            }
+            let mut final_word = String::new();
+            for (i, c) in word.chars().enumerate() {
+                if i >= start && i < end {
+                    if !is_vowel(c) {
+                        final_word = format!("{}{}", final_word, c);
+                    }
+                } else {
+                    final_word = format!("{}{}", final_word, c);
                 }
             }
-            output = format!("{} {}", output, word);
+            output = format!("{} {}", output, final_word);
         } else {
             output = format!("{} {}", output, word);
         }
@@ -71,6 +83,14 @@ pub fn decompress(input: impl AsRef<str>) -> String {
                     consonant_counter = 0;
                 }
             }
+        }
+
+        // if this word is only one letter, add a random vowel
+        if word.len() == 1 {
+            const VOWELS: [char; 5] = ['a', 'e', 'i', 'o', 'u'];
+            let mut random = rand::thread_rng();
+            let vowel = VOWELS[random.gen_range(0..VOWELS.len())];
+            word = format!("{}{}", word, vowel);
         }
 
         output = format!("{} {}", output, word);

@@ -9,10 +9,10 @@ impl Compressor {
     }
 
     pub fn compress(&self, input: impl AsRef<str>) -> String {
-        let mut output = String::new();
+        let mut output = input.as_ref().to_string();
 
         if self.compression_types.thesaurus {
-            output = thesaurus::compress(input);
+            output = thesaurus::compress(output);
         }
 
         if self.compression_types.vowel_removal {

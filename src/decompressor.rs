@@ -9,10 +9,10 @@ impl Decompressor {
     }
 
     pub fn decompress(&self, input: impl AsRef<str>) -> String {
-        let mut output = String::new();
+        let mut output = input.as_ref().to_string();
 
         if self.decompression_types.whitespace_injection {
-            output = whitespace::decompress(input);
+            output = whitespace::decompress(output);
         }
 
         if self.decompression_types.punctuation_injection {

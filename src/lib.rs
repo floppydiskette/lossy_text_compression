@@ -54,18 +54,18 @@ pub const COMPRESSOR_LEVEL_5: Compressor = Compressor {
 
 pub const DECOMPRESSOR_LEVEL_1: Decompressor = Decompressor {
     decompression_types: DecompressionTypes {
-        vowel_injection: false,
+        vowel_injection: true,
         punctuation_injection: false,
-        thesaurus: true,
+        thesaurus: false,
         whitespace_injection: false,
     },
 };
 
 pub const DECOMPRESSOR_LEVEL_2: Decompressor = Decompressor {
     decompression_types: DecompressionTypes {
-        vowel_injection: false,
+        vowel_injection: true,
         punctuation_injection: true,
-        thesaurus: true,
+        thesaurus: false,
         whitespace_injection: false,
     },
 };
@@ -74,8 +74,8 @@ pub const DECOMPRESSOR_LEVEL_3: Decompressor = Decompressor {
     decompression_types: DecompressionTypes {
         vowel_injection: true,
         punctuation_injection: true,
-        thesaurus: true,
-        whitespace_injection: false,
+        thesaurus: false,
+        whitespace_injection: true,
     },
 };
 

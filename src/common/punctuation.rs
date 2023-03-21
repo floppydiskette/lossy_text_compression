@@ -77,7 +77,7 @@ pub fn decompress(input: impl AsRef<str>) -> String {
             word = word.replace(',', ";");
         }
 
-        output.push_str(&word);
+        output.push_str(&format!("{} ", word));
     }
-    output
+    output.trim().to_string()
 }
